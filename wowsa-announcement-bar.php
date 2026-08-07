@@ -3,7 +3,7 @@
  * Plugin Name:       WOWSA Announcement Bar
  * Plugin URI:        https://openwaterswimming.com/
  * Description:       Reusable institutional announcement bar for WOWSA initiatives. One announcement at a time, displayed above the primary navigation. Fully configurable from the WordPress admin — no code changes required to reuse it.
- * Version:           1.0.0
+ * Version:           1.0.1
  * Requires at least: 5.6
  * Requires PHP:      7.4
  * Author:            WOWSA
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WOWSA_AB_VERSION', '1.0.0' );
+define( 'WOWSA_AB_VERSION', '1.0.1' );
 define( 'WOWSA_AB_OPTION', 'wowsa_announcement_bar' );
 define( 'WOWSA_AB_URL', plugin_dir_url( __FILE__ ) );
 define( 'WOWSA_AB_PATH', plugin_dir_path( __FILE__ ) );
@@ -263,6 +263,31 @@ add_action( 'wp_body_open', 'wowsa_ab_render', 1 );
 add_shortcode( 'wowsa_announcement_bar', static function () {
 	return wowsa_ab_should_display() ? wowsa_ab_markup() : '';
 } );
+
+/**
+ * Automatic fallback for themes that never call wp_body_open() (common in
+ * older/page-builder themes). Buffers the page and, only if the bar didn't
+ * already render via the hook, splices it in right after the opening
+ * <body> tag. No theme edits required.
+ */
+add_action( 'template_redirect', static function () {
+	if ( is_admin() || ! wowsa_ab_should_display() ) {
+		return;
+	}
+	ob_start( 'wowsa_ab_inject_fallback' );
+} );
+
+function wowsa_ab_inject_fallback( $html ) {
+	if ( false !== strpos( $html, 'wowsa-ab__inner' ) ) {
+		return $html; // Theme already rendered it via wp_body_open.
+	}
+	$markup = wowsa_ab_markup();
+	if ( '' === $markup ) {
+		return $html;
+	}
+	$replaced = preg_replace( '/(<body[^>]*>)/i', '$1' . $markup, $html, 1 );
+	return null !== $replaced ? $replaced : $html;
+}
 
 add_filter( 'body_class', static function ( $classes ) {
 	if ( wowsa_ab_should_display() ) {

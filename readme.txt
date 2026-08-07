@@ -3,7 +3,7 @@ Contributors: wowsa
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: GPLv2 or later
 
 A reusable institutional announcement bar for WOWSA initiatives.
@@ -28,8 +28,10 @@ Design constraints (fixed, by intent):
 2. Activate the plugin.
 3. Go to Settings → Announcement Bar and configure it.
 
-If your theme does not fire `wp_body_open`, add the shortcode
-`[wowsa_announcement_bar]` at the very top of `header.php` instead.
+The bar renders automatically even on themes that don't call
+`wp_body_open` (it falls back to injecting itself after the opening
+`<body>` tag). The `[wowsa_announcement_bar]` shortcode remains available
+for manual placement if you'd rather control the exact spot.
 
 == Admin controls ==
 
@@ -59,6 +61,10 @@ A body class `has-wowsa-announcement-bar` is added whenever the bar renders,
 for themes that need to offset a sticky header.
 
 == Changelog ==
+
+= 1.0.1 =
+* Fix: bar now renders automatically on themes that never call
+  `wp_body_open` (e.g. WilCity), instead of silently not appearing.
 
 = 1.0.0 =
 * Initial release.
