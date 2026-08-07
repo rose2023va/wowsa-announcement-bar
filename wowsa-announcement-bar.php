@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name:       WOWSA Announcement Bar
- * Plugin URI:        https://openwaterswimming.com/
+ * Plugin URI:        https://github.com/rose2023va/wowsa-announcement-bar
  * Description:       Reusable institutional announcement bar for WOWSA initiatives. One announcement at a time, displayed above the primary navigation. Fully configurable from the WordPress admin — no code changes required to reuse it.
- * Version:           1.0.1
+ * Version:           1.0.2
  * Requires at least: 5.6
  * Requires PHP:      7.4
  * Author:            WOWSA
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'WOWSA_AB_VERSION', '1.0.1' );
+define( 'WOWSA_AB_VERSION', '1.0.2' );
 define( 'WOWSA_AB_OPTION', 'wowsa_announcement_bar' );
 define( 'WOWSA_AB_URL', plugin_dir_url( __FILE__ ) );
 define( 'WOWSA_AB_PATH', plugin_dir_path( __FILE__ ) );

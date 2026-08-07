@@ -3,7 +3,7 @@ Contributors: wowsa
 Requires at least: 5.6
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 License: GPLv2 or later
 
 A reusable institutional announcement bar for WOWSA initiatives.
@@ -61,6 +61,9 @@ A body class `has-wowsa-announcement-bar` is added whenever the bar renders,
 for themes that need to offset a sticky header.
 
 == Changelog ==
+
+= 1.0.2 =
+* Point "Visit plugin site" (Plugin URI) at the GitHub repo.
 
 = 1.0.1 =
 * Fix: bar now renders automatically on themes that never call
